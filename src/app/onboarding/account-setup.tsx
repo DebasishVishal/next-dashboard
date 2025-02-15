@@ -98,47 +98,52 @@ export default function AccountSetup() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
+        <p className="text-muted-foreground">Step 2 of 4</p>
         <h1 className="text-2xl font-semibold">Account Setup</h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Tell us more about your business and how you plan to use our platform.
         </p>
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-md font-medium">
-          Which platforms do you actively use? (Select all that apply) *
+      <div className="space-y-1">
+        <h2 className="text-sm font-medium">
+          Which platforms do you actively use?
+          <span className="font-light pl-1">(Select all that apply)</span>
         </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="flex flex-row gap-2">
           {platforms.map(({ name, logo }) => (
             <Card
               key={name}
               className={cn(
-                "cursor-pointer border-2 transition-colors hover:bg-accent",
+                "cursor-pointer border-2 transition-colors hover:bg-accent w-[110px] mr-2",
                 selectedPlatforms.includes(name) && "border-primary"
               )}
               onClick={() => handlePlatformToggle(name)}
             >
               <CardContent className="flex flex-col h-24 items-center justify-center p-6">
                 <Image src={logo} alt={name} width={40} height={40} />
-                <span className="text-sm">{name}</span>
+                <span className="text-xs mt-2">{name}</span>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-md font-medium">
-          Which best describes your role? (Select all that apply) *
+      <div className="space-y-1">
+        <h2 className="text-sm font-medium">
+          Which best describes your role?
+          <span className="font-light pl-1">(Select all that apply)</span>
         </h2>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full justify-between">
-              {selectedRoles.length > 0
-                ? `${selectedRoles.length} selected`
-                : "Select roles"}
+            <Button variant="outline" className="w-1/2 justify-between">
+              <span className="font-normal text-neutral-700">
+                {selectedRoles.length > 0
+                  ? `${selectedRoles.length} selected`
+                  : "Select roles"}
+              </span>
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
@@ -166,7 +171,7 @@ export default function AccountSetup() {
           </PopoverContent>
         </Popover>
         {selectedRoles.includes("Other (please specify)") && (
-          <div className="space-y-2">
+          <div className="space-y-1 mt-3">
             <Label htmlFor="otherRole">Please specify your role:</Label>
             <Input
               id="otherRole"
@@ -178,22 +183,29 @@ export default function AccountSetup() {
         )}
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-md font-medium">
-          What is your current business focus? (Select all that apply) *
+      <div className="space-y-1">
+        <h2 className="text-sm font-medium">
+          What is your current business focus?
+          <span className="font-light pl-1">(Select all that apply)</span>
         </h2>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full justify-between">
-              {selectedBusinessFocus.length > 0
-                ? `${selectedBusinessFocus.length} selected`
-                : "Select focus areas"}
+            <Button variant="outline" className="w-1/2 justify-between">
+              <span className="font-normal text-neutral-700">
+                {selectedBusinessFocus.length > 0
+                  ? `${selectedBusinessFocus.length} selected`
+                  : "Select focus areas"}
+              </span>
+
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-full p-0">
             <Command>
-              <CommandInput placeholder="Search focus areas..." />
+              <CommandInput
+                placeholder="Search focus areas..."
+                className="placeholder:font-light"
+              />
               <CommandList>
                 <CommandEmpty>No focus area found.</CommandEmpty>
                 <CommandGroup>

@@ -53,6 +53,33 @@ export default function Dashboard() {
     fetchUser();
   }, [router]);
 
+  // const handleLogout = async () => {
+  //   try {
+  //     // Call the backend logout API to destroy session
+  //     await fetch("http://localhost:5000/auth/logout", {
+  //       method: "POST",
+  //       credentials: "include", // Ensure session is properly cleared
+  //     });
+
+  //     // ✅ Force a full logout by clearing browser storage
+  //     sessionStorage.clear();
+  //     localStorage.clear();
+
+  //     // ✅ Delete all cookies manually
+  //     // document.cookie.split(";").forEach((c) => {
+  //     //   document.cookie = c
+  //     //     .replace(/^ +/, "")
+  //     //     .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+  //     // });
+
+  //     // ✅ Redirect to login page (forcing Google re-authentication)
+  //     // router.replace("/login");
+  //     window.location.href = "/login"; // Use full page reload
+  //   } catch (error) {
+  //     console.error("Error during logout:", error);
+  //   }
+  // };
+
   const handleLogout = async () => {
     try {
       // Call the backend logout endpoint to clear session cookies

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Check } from "lucide-react";
+import { Search, Check, Plus } from "lucide-react";
 import { useOnboarding } from "./onboarding-context";
 
 const topics = [
@@ -39,12 +39,13 @@ export default function Preferences() {
   console.log(data);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
+        <p className="text-muted-foreground">Step 4 of 4</p>
         <h1 className="text-2xl font-semibold">
           Select Topics to Personalize Your Experience
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Select topics you&apos;re interested in to personalize your
           experience.
         </p>
@@ -59,8 +60,13 @@ export default function Preferences() {
               className="cursor-pointer hover:bg-primary hover:text-primary-foreground text-sm font-semibold px-3 py-2 flex items-center gap-2"
               onClick={() => toggleTopic(topic)}
             >
-              {topic}
-              {selectedTopics.includes(topic) && <Check className="h-4 w-4" />}
+              <span>{topic}</span>
+
+              {selectedTopics.includes(topic) ? (
+                <Check className="h-4 w-4" />
+              ) : (
+                <Plus className="h-4 w-4" />
+              )}
             </Badge>
           ))}
         </div>

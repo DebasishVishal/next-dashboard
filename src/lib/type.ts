@@ -53,6 +53,7 @@ type OnboardingData = {
     lastName: string;
     phone: string;
     country: string;
+    countryCode: string;
   };
   accountSetup: {
     platforms: string[];

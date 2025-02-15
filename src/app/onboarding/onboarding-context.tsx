@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 
 type OnboardingData = {
@@ -9,6 +10,7 @@ type OnboardingData = {
     lastName: string;
     phone: string;
     country: string;
+    countryCode: string;
   };
   accountSetup: {
     platforms: string[];
@@ -34,7 +36,13 @@ type OnboardingContextType = {
 };
 
 const defaultData: OnboardingData = {
-  personalInfo: { firstName: "", lastName: "", phone: "", country: "" },
+  personalInfo: {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    country: "",
+    countryCode: "",
+  },
   accountSetup: { platforms: [], roles: [], businessFocus: [] },
   appAndTool: { apps: [] },
   preferences: { interests: [] },
@@ -48,6 +56,19 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState<OnboardingData>(defaultData);
+
+  // Load data from localStorage on the client side
+  useEffect(() => {
+    const savedData = localStorage.getItem("onboardingData");
+    if (savedData) {
+      setData(JSON.parse(savedData));
+    }
+  }, []);
+
+  // Save data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("onboardingData", JSON.stringify(data));
+  }, [data]);
 
   const updateData = (
     step: keyof OnboardingData,
@@ -74,11 +95,10 @@ export const OnboardingProvider: React.FC<{ children: React.ReactNode }> = ({
           data.accountSetup.businessFocus.length > 0
         );
       case "appAndTool":
-        return data.appAndTool.apps.length > 0; // Fix: Check apps array length
+        return data.appAndTool.apps.length > 0;
       case "preferences":
-        return data.preferences.interests.length > 0; // All fields are optional in preferences
-      default:
-        return false;
+        return data.preferences.interests.length > 0;
+      // return false;
     }
   };
 
