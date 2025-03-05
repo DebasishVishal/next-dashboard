@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { AppWindowIcon as Apps, Grid2X2, Hash } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { useSidebarContext } from "../layout";
 
 // Skeleton component for loading
 const SkeletonCard = () => (
@@ -17,18 +18,17 @@ const SkeletonCard = () => (
   </Card>
 );
 
-export default function MetricCards({
-  isSidebarOpen = true,
-}: {
-  isSidebarOpen?: boolean;
-}) {
+export default function MetricCards() {
   const [appsCount, setAppsCount] = useState(0);
   const [categoriesCount, setCategoriesCount] = useState(0);
   const [keywordsCount, setKeywordsCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const breakpoint1 = isSidebarOpen ? "lg" : "md";
-  const breakpoint2 = isSidebarOpen ? "md" : "sm";
+  const { isOpen, isMobile } = useSidebarContext();
+
+  // Determine the effective breakpoint based on sidebar state
+  const breakpoint1 = isOpen ? "lg" : "md";
+  const breakpoint2 = isOpen ? "md" : "sm";
 
   useEffect(() => {
     const fetchFollowedCounts = async () => {

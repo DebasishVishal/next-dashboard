@@ -22,11 +22,7 @@ import { countries } from "../../../lib/countries";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSidebarContext } from "../layout";
 
-export default function ProfilePage({
-  isSidebarOpen = true,
-}: {
-  isSidebarOpen?: boolean;
-}) {
+export default function ProfilePage() {
   const [formData, setFormData] = useState({
     email: "johndoe@gmail.com",
     firstName: "John",

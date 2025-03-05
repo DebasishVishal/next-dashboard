@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   // console.log("Session cookie:", sessionCookie);
 
   // Define protected routes
-  const protectedRoutes = [, "/onboarding"]; // Add your protected routes here
+  const protectedRoutes = [""]; // Add your protected routes here
 
   // If the user tries to access a protected route without a session, redirect to login
   if (protectedRoutes.includes(request.nextUrl.pathname) && !sessionCookie) {

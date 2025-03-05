@@ -54,7 +54,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [headerHeight, setHeaderHeight] = useState(90);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Function to calculate the total height of TopNav + Navbar based on viewport visibility
