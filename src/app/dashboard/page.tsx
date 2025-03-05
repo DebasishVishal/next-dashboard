@@ -82,7 +82,7 @@ export default function Dashboard() {
   // }
 
   return (
-    <div className="p-4 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       {/* <h1>Dashboard</h1>
       <p>
         Welcome, {user.firstName} {user.lastName}
