@@ -1,19 +1,25 @@
 import { NextResponse } from "next/server";
 
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 export async function POST(request: Request) {
   try {
     const data = await request.json();
     // console.log("Received data:", data); // Log the received data
 
-    const response = await fetch("http://localhost:5000/auth/onboarding", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Set Content-Type
-        Cookie: request.headers.get("Cookie") || "", // Pass the session cookie
-      },
-      body: JSON.stringify(data),
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/onboarding`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Set Content-Type
+          Cookie: request.headers.get("Cookie") || "", // Pass the session cookie
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      }
+    );
 
     // console.log("Backend response status:", response.status); // Log the backend response status
 

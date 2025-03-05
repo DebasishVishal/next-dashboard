@@ -8,8 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useOnboarding } from "./onboarding-context";
-import { countries } from "./countries";
+import { useOnboarding } from "./OnboardingContext";
+import { countries } from "../../lib/countries";
 
 export default function PersonalInfo() {
   const { data, updateData } = useOnboarding();
@@ -17,17 +17,22 @@ export default function PersonalInfo() {
     data.personalInfo;
 
   // Get the selected country object
-  const selectedCountry = countries.find((c) => c.code === country);
+  const selectedCountry = countries.find((c) => c.phoneCode === countryCode);
 
-  // Handle country change
+  // Handle country selection (updates country and countryCode)
   const handleCountryChange = (value: string) => {
-    const selectedCountry = countries.find((c) => c.code === value);
-    if (selectedCountry) {
+    const selected = countries.find((c) => c.code === value);
+    if (selected) {
       updateData("personalInfo", {
         country: value,
-        countryCode: selectedCountry.phoneCode, // Update countryCode when country changes
+        countryCode: selected.phoneCode, // Auto-update country code
       });
     }
+  };
+
+  // Handle country code change
+  const handleCountryCodeChange = (value: string) => {
+    updateData("personalInfo", { countryCode: value });
   };
 
   // Handle phone number input change
@@ -56,7 +61,7 @@ export default function PersonalInfo() {
               id="firstName"
               placeholder="First name"
               value={firstName}
-              className="w-1/2 sm:w-full"
+              className="w-full"
               onChange={(e) =>
                 updateData("personalInfo", { firstName: e.target.value })
               }
@@ -71,7 +76,7 @@ export default function PersonalInfo() {
               id="lastName"
               placeholder="Last name"
               value={lastName}
-              className="w-1/2 sm:w-full"
+              className="w-full"
               onChange={(e) =>
                 updateData("personalInfo", { lastName: e.target.value })
               }
@@ -80,49 +85,55 @@ export default function PersonalInfo() {
           </div>
         </div>
 
-        {/* <div className="space-y-1">
-          <Label htmlFor="phone" className="text-sm">
-            Phone number (optional)
+        {/* Country */}
+        <div className="space-y-1 w-1/2">
+          <Label htmlFor="country" className="text-sm">
+            Choose your country
           </Label>
-          <Input
-            id="phone"
-            placeholder="Enter phone number"
-            value={phone}
-            className="w-1/2"
-            onChange={(e) =>
-              updateData("personalInfo", { phone: e.target.value })
-            }
-          />
-        </div> */}
+
+          <div className="flex gap-2">
+            <Select value={country} onValueChange={handleCountryChange}>
+              <SelectTrigger className="[&[data-placeholder]]:font-normal [&[data-placeholder]]:text-neutral-500">
+                <SelectValue placeholder="Select a country" />
+              </SelectTrigger>
+              <SelectContent>
+                <ScrollArea className="h-60 w-60">
+                  {countries.map((country) => (
+                    <SelectItem key={country.code} value={country.code}>
+                      {country.name} {country.flag}
+                    </SelectItem>
+                  ))}
+                </ScrollArea>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
 
         {/* Phone Number with Country Code */}
         <div className="space-y-1">
           <Label htmlFor="phone" className="text-sm">
-            Phone number (optional)
+            Phone number
+            <span className="font-light text-neutral-500"> (Optional)</span>
           </Label>
-          <div className="flex gap-2 w-2/3">
-            {/* Country Code Selector */}
-            <Select
-              value={countryCode}
-              onValueChange={(value) =>
-                updateData("personalInfo", { countryCode: value })
-              }
-            >
-              <SelectTrigger className="w-[110px]">
-                <SelectValue placeholder="Code" />
+
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-2/3">
+            <Select value={countryCode} onValueChange={handleCountryCodeChange}>
+              <SelectTrigger className="w-[80px]">
+                <SelectValue placeholder="🇺🇸">
+                  {selectedCountry ? selectedCountry.flag : "🇮🇳"}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <ScrollArea className="h-80">
+                <ScrollArea className="h-60 w-60">
                   {countries.map((country) => (
                     <SelectItem key={country.code} value={country.phoneCode}>
-                      {country.name} ({country.phoneCode})
+                      {country.name} {country.flag} ({country.phoneCode})
                     </SelectItem>
                   ))}
                 </ScrollArea>
               </SelectContent>
             </Select>
 
-            {/* Phone Number Input */}
             <Input
               id="phone"
               placeholder="Enter phone number"
@@ -131,31 +142,6 @@ export default function PersonalInfo() {
               type="tel"
             />
           </div>
-        </div>
-
-        <div className="space-y-1 w-1/3">
-          <Label htmlFor="country" className="text-sm">
-            Choose your country
-          </Label>
-          <Select
-            value={country}
-            onValueChange={(value) =>
-              updateData("personalInfo", { country: value })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select a country" />
-            </SelectTrigger>
-            <SelectContent>
-              <ScrollArea className="h-80 ">
-                {countries.map((country) => (
-                  <SelectItem key={country.code} value={country.code}>
-                    {country.name}
-                  </SelectItem>
-                ))}
-              </ScrollArea>
-            </SelectContent>
-          </Select>
         </div>
       </div>
     </div>

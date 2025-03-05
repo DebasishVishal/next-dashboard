@@ -1,4 +1,4 @@
-export const countries = [
+const allCountries = [
   { name: "Afghanistan", code: "AF", phoneCode: "+93" },
   { name: "Albania", code: "AL", phoneCode: "+355" },
   { name: "Algeria", code: "DZ", phoneCode: "+213" },
@@ -126,7 +126,6 @@ export const countries = [
   { name: "Lithuania", code: "LT", phoneCode: "+370" },
   { name: "Luxembourg", code: "LU", phoneCode: "+352" },
   { name: "Macau", code: "MO", phoneCode: "+853" },
-  { name: "Macedonia", code: "MK", phoneCode: "+389" },
   { name: "Madagascar", code: "MG", phoneCode: "+261" },
   { name: "Malawi", code: "MW", phoneCode: "+265" },
   { name: "Malaysia", code: "MY", phoneCode: "+60" },
@@ -157,6 +156,7 @@ export const countries = [
   { name: "Nigeria", code: "NG", phoneCode: "+234" },
   { name: "Niue", code: "NU", phoneCode: "+683" },
   { name: "North Korea", code: "KP", phoneCode: "+850" },
+  { name: "North Macedonia", code: "MK", phoneCode: "+389" },
   { name: "Northern Mariana Islands", code: "MP", phoneCode: "+1-670" },
   { name: "Norway", code: "NO", phoneCode: "+47" },
   { name: "Oman", code: "OM", phoneCode: "+968" },
@@ -242,6 +242,30 @@ export const countries = [
   { name: "Zambia", code: "ZM", phoneCode: "+260" },
   { name: "Zimbabwe", code: "ZW", phoneCode: "+263" },
 ];
+
+interface Country {
+  name: string;
+  code: string;
+  phoneCode: string;
+  flag?: string;
+}
+
+const addFlagsToCountries = (countries: Country[]): Country[] => {
+  return countries.map((country) => {
+    const codePoints = country.code
+      .toUpperCase()
+      .split("")
+      .map((char: string) => 127397 + char.charCodeAt(0));
+    return { ...country, flag: String.fromCodePoint(...codePoints) };
+  });
+};
+
+const countriesWithFlags = addFlagsToCountries(allCountries);
+export const countries = countriesWithFlags;
+
+// To see the flag for the United States:
+// const us = updatedCountries.find((country) => country.code === "US");
+// console.log(countries); // Expected output: "🇺🇸"
 
 // export const countries = [
 //   { name: "Afghanistan", code: "AF" },

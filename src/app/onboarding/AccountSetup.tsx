@@ -22,13 +22,22 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useOnboarding } from "./onboarding-context";
+import { useOnboarding } from "./OnboardingContext";
 import Image from "next/image";
 
 const platforms = [
-  { name: "Shopify", logo: "/shopify-logo.svg" },
-  { name: "Wordpress", logo: "/Wordpress-Logo.svg" },
-  { name: "Bigcommerce", logo: "/bigcommerce-logo.svg" },
+  {
+    name: "Shopify",
+    logo: "https://api-nest-stag.shopdigest.com/static/images/logo_shopify.svg",
+  },
+  {
+    name: "Wordpress",
+    logo: "https://api-nest-stag.shopdigest.com/static/images/logo_wordpress.svg",
+  },
+  {
+    name: "Bigcommerce",
+    logo: "https://api-nest-stag.shopdigest.com/static/images/logo_bigcommerce.svg",
+  },
 ];
 
 const roles = [
@@ -98,7 +107,7 @@ export default function AccountSetup() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-7">
       <div>
         <p className="text-muted-foreground">Step 2 of 4</p>
         <h1 className="text-2xl font-semibold">Account Setup</h1>
@@ -110,14 +119,16 @@ export default function AccountSetup() {
       <div className="space-y-1">
         <h2 className="text-sm font-medium">
           Which platforms do you actively use?
-          <span className="font-light pl-1">(Select all that apply)</span>
+          <span className="font-light text-neutral-500 pl-1">
+            (Select all that apply)
+          </span>
         </h2>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-wrap sm:flex-row gap-2">
           {platforms.map(({ name, logo }) => (
             <Card
               key={name}
               className={cn(
-                "cursor-pointer border-2 transition-colors hover:bg-accent w-[110px] mr-2",
+                "cursor-pointer border transition-colors hover:bg-accent w-[110px] mr-2",
                 selectedPlatforms.includes(name) && "border-primary"
               )}
               onClick={() => handlePlatformToggle(name)}
@@ -134,12 +145,17 @@ export default function AccountSetup() {
       <div className="space-y-1">
         <h2 className="text-sm font-medium">
           Which best describes your role?
-          <span className="font-light pl-1">(Select all that apply)</span>
+          <span className="font-light text-neutral-500 pl-1">
+            (Select all that apply)
+          </span>
         </h2>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-1/2 justify-between">
-              <span className="font-normal text-neutral-700">
+            <Button
+              variant="outline"
+              className="w-[361px] justify-between pr-2"
+            >
+              <span className="font-normal text-neutral-500">
                 {selectedRoles.length > 0
                   ? `${selectedRoles.length} selected`
                   : "Select roles"}
@@ -147,13 +163,13 @@ export default function AccountSetup() {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-[361px] p-0">
             <Command>
               <CommandInput placeholder="Search roles..." />
               <CommandList>
                 <CommandEmpty>No role found.</CommandEmpty>
                 <CommandGroup>
-                  <ScrollArea className="h-72">
+                  <ScrollArea className="h-60">
                     {roles.map((role) => (
                       <CommandItem
                         key={role}
@@ -186,12 +202,14 @@ export default function AccountSetup() {
       <div className="space-y-1">
         <h2 className="text-sm font-medium">
           What is your current business focus?
-          <span className="font-light pl-1">(Select all that apply)</span>
+          <span className="font-light text-neutral-500 pl-1">
+            (Select all that apply)
+          </span>
         </h2>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-1/2 justify-between">
-              <span className="font-normal text-neutral-700">
+            <Button variant="outline" className="w-[361px] justify-between">
+              <span className="font-normal text-neutral-500">
                 {selectedBusinessFocus.length > 0
                   ? `${selectedBusinessFocus.length} selected`
                   : "Select focus areas"}
@@ -200,7 +218,7 @@ export default function AccountSetup() {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full p-0">
+          <PopoverContent className="w-[361px] p-0">
             <Command>
               <CommandInput
                 placeholder="Search focus areas..."
@@ -209,7 +227,7 @@ export default function AccountSetup() {
               <CommandList>
                 <CommandEmpty>No focus area found.</CommandEmpty>
                 <CommandGroup>
-                  <ScrollArea className="h-72">
+                  <ScrollArea className="h-60">
                     {businessFocuses.map((focus) => (
                       <CommandItem
                         key={focus}

@@ -24,21 +24,6 @@ const notificationPreferences = [
   },
 ];
 
-const topics = [
-  "Technology",
-  "Politics",
-  "Sports",
-  "Entertainment",
-  "Science",
-  "Business",
-  "Health",
-  "Music",
-  "Art",
-  "Food",
-  "Travel",
-  "Fashion",
-];
-
 export default function Notifications() {
   return (
     <div className="space-y-6">
